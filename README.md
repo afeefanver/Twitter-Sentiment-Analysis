@@ -28,13 +28,12 @@ This project classifies tweets into **Positive**, **Negative**, or **Neutral** s
 ├── sentiment_tokenizer_glov.joblib # Tokenizer for preprocessing
 ├── Twitter_Data.csv                # Dataset
 ├── glove.6B.100d.txt               # GloVe embeddings (100d)
-├── requirements.txt                # Python dependencies
 └── README.md                       # Documentation
 
 yaml
 Copy code
 
----
+'''
 
 ## ⚙️ Installation & Setup
 
