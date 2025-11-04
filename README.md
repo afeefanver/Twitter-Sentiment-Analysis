@@ -54,66 +54,63 @@ Dense (64, ReLU)
 ↓
 Dense (3, Softmax)
 
-##  Saved Files
-sentiment_bilstm_glov.h5
-sentiment_tokenizer_glov.joblib
+### 📊 Model Summary
 
-## 💻 Running the Streamlit App
-Run the web app locally:
-
-bash
-Copy code
-streamlit run app.py
-🖥️ Example Predictions
-Tweet	Predicted Sentiment
-I love this movie!	😀 Positive
-This is terrible.	😡 Negative
-It’s okay, not great.	😐 Neutral
-
-📊 Model Evaluation
-Metric	Score
-Accuracy	84–86%
-Loss	~0.4
-Optimizer	Adam
-Loss Function	Categorical Crossentropy
-
-Visualization:
-
-Confusion Matrix
-
-Accuracy vs. Loss curves
-(included in the Jupyter notebook)
-
-🚀 Future Improvements
-Implement BERT/RoBERTa for higher accuracy
-
-Integrate Twitter API for real-time tweet analysis
-
-Add explainability with SHAP or LIME
-
-Deploy app on Streamlit Cloud or Hugging Face Spaces
-
-👤 Author
-Afeef Anversha
-Data Analyst | AI & ML Enthusiast
-🔗 LinkedIn
-🐙 GitHub
-
-🪪 License
-This project is licensed under the MIT License.
-Feel free to use, modify, and share with attribution.
-
-⭐ Support
-If you find this project useful, please consider giving it a ⭐ on GitHub
-and connecting with me on LinkedIn!
-
-🔖 Tags
-#AI #NLP #DeepLearning #TensorFlow #Streamlit #MachineLearning #Python #DataScience
-
-markdown
-Copy code
+| Layer (Type) | Output Shape | Param # |
+|---------------|---------------|----------|
+| Embedding (Non-trainable GloVe) | (None, 50, 100) | 2,000,000+ |
+| Bidirectional LSTM (128 units) | (None, 256) | 234,496 |
+| Dropout (0.5) | (None, 256) | 0 |
+| Dense (64, ReLU) | (None, 64) | 16,448 |
+| Dense (Softmax) | (None, 3) | 195 |
+| **Total Parameters** | **~2.25 Million** |  |
 
 ---
+
+## 🧾 Model Training
+
+Model training is handled inside **`twitter.ipynb`** and follows these main steps:
+
+1. Clean and preprocess the dataset  
+2. Tokenize and pad tweet sequences  
+3. Encode sentiment labels  
+4. Load pretrained **GloVe (100d)** embeddings  
+5. Build and train the **BiLSTM** model  
+6. Use `class_weight` to manage class imbalance  
+7. Evaluate and save both the model and tokenizer  
+
+### 💾 Saved Files
+
+| File Name | Description |
+|------------|-------------|
+| `sentiment_bilstm_glov.h5` | Trained BiLSTM model |
+| `sentiment_tokenizer_glov.joblib` | Tokenizer used for preprocessing |
+
+---
+
+## 🧪 Model Evaluation
+
+| Metric | Score |
+|--------|--------|
+| **Accuracy** | 84–86% |
+| **Loss** | ~0.40 |
+| **Optimizer** | Adam |
+| **Loss Function** | Categorical Crossentropy |
+
+**Visualizations:**
+- Confusion Matrix  
+- Accuracy vs. Loss Curves  
+*(Available in the Jupyter notebook)*
+
+---
+
+## 💻 Running the Streamlit App
+
+Run the app locally using the command below:
+
+```bash
+streamlit run app.py
+
 
 ✅ **How to use it:**
 1. Copy everything above (including the Markdown formatting).
