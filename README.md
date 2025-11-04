@@ -19,7 +19,7 @@ This project classifies tweets into **Positive**, **Negative**, or **Neutral** s
 
 ## 🧩 Project Structure
 
-
+```bash
 📁 Twitter-Sentiment-Analysis
 │
 ├── app.py                          # Streamlit web app
@@ -27,9 +27,10 @@ This project classifies tweets into **Positive**, **Negative**, or **Neutral** s
 ├── sentiment_bilstm_glov.h5        # Trained BiLSTM model
 ├── sentiment_tokenizer_glov.joblib # Tokenizer for preprocessing
 ├── Twitter_Data.csv                # Dataset
-├── glove.6B.100d.txt               # GloVe embeddings (100d)
+├── glove.6B.50d.txt               # GloVe embeddings (50d)
 └── README.md                       # Documentation
 
+```
 ---
 
 ## 🧠 Key Insights
@@ -43,7 +44,7 @@ Training is handled in twitter.ipynb and includes:
 ---
 
 ## 🧮 Model Architecture
-
+```
 Embedding (GloVe 100d)
 ↓
 Bidirectional LSTM (128 units)
@@ -53,7 +54,7 @@ Dropout (0.5)
 Dense (64, ReLU)
 ↓
 Dense (3, Softmax)
-
+```
 ---
 
 ### 📊 Model Summary
