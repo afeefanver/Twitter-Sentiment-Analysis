@@ -30,41 +30,18 @@ This project classifies tweets into **Positive**, **Negative**, or **Neutral** s
 ├── glove.6B.100d.txt               # GloVe embeddings (100d)
 └── README.md                       # Documentation
 
-yaml
-Copy code
-
-'''
-
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/<your-username>/Twitter-Sentiment-Analysis.git
-cd Twitter-Sentiment-Analysis
-2️⃣ Install Dependencies
-bash
-Copy code
-pip install -r requirements.txt
-3️⃣ Download GloVe Embeddings
-Download from GloVe 6B Dataset
-Place the file glove.6B.100d.txt in the project folder.
-
-🧠 Model Training
+## 🧠 Key Insights
 Training is handled in twitter.ipynb and includes:
+- Text cleaning and tokenization
+- Label encoding (positive, neutral, negative)
+- Loading GloVe 100d embeddings
+- Building and training a BiLSTM model
+- Evaluating performance and saving model/tokenizer
 
-Text cleaning and tokenization
 
-Label encoding (positive, neutral, negative)
 
-Loading GloVe 100d embeddings
+## 🧮 Model Architecture
 
-Building and training a BiLSTM model
-
-Evaluating performance and saving model/tokenizer
-
-🧮 Model Architecture
-scss
-Copy code
 Embedding (GloVe 100d)
 ↓
 Bidirectional LSTM (128 units)
@@ -74,12 +51,12 @@ Dropout (0.5)
 Dense (64, ReLU)
 ↓
 Dense (3, Softmax)
-Saved Files
 
-Copy code
+##  Saved Files
 sentiment_bilstm_glov.h5
 sentiment_tokenizer_glov.joblib
-💻 Running the Streamlit App
+
+## 💻 Running the Streamlit App
 Run the web app locally:
 
 bash
