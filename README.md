@@ -19,8 +19,6 @@ This project classifies tweets into **Positive**, **Negative**, or **Neutral** s
 
 ## 🧩 Project Structure
 
-## 🧩 Project Structure
-
 ```bash
 📁 Twitter-Sentiment-Analysis
 │
