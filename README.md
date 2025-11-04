@@ -30,6 +30,8 @@ This project classifies tweets into **Positive**, **Negative**, or **Neutral** s
 ├── glove.6B.100d.txt               # GloVe embeddings (100d)
 └── README.md                       # Documentation
 
+---
+
 ## 🧠 Key Insights
 Training is handled in twitter.ipynb and includes:
 - Text cleaning and tokenization
