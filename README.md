@@ -40,7 +40,7 @@ Training is handled in twitter.ipynb and includes:
 - Building and training a BiLSTM model
 - Evaluating performance and saving model/tokenizer
 
-
+---
 
 ## 🧮 Model Architecture
 
@@ -53,6 +53,8 @@ Dropout (0.5)
 Dense (64, ReLU)
 ↓
 Dense (3, Softmax)
+
+---
 
 ### 📊 Model Summary
 
