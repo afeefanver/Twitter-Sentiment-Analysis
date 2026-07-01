@@ -5,6 +5,7 @@
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+import pandas as pd
 import re
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from joblib import load
@@ -33,6 +34,14 @@ model, tokenizer = load_resources()
 # -------------------------------------------------------------
 MAX_LENGTH = 50
 CLASS_LABELS = ["negative", "neutral", "positive"]  # update this line using label_encoder.classes_
+TEXT_COLUMN_CANDIDATES = (
+    "text",
+    "tweet",
+    "tweet_text",
+    "full_text",
+    "content",
+    "message",
+)
 
 # -------------------------------------------------------------
 # Cleaning Function
@@ -44,19 +53,32 @@ def clean_text(text):
     text = text.lower().strip()
     return text
 
+
+def find_text_column(dataframe):
+    normalized = {column.lower().strip(): column for column in dataframe.columns}
+    for candidate in TEXT_COLUMN_CANDIDATES:
+        if candidate in normalized:
+            return normalized[candidate]
+    return None
+
 # -------------------------------------------------------------
 # Prediction Function
 # -------------------------------------------------------------
-def predict_sentiment(text):
-    text = clean_text(text.strip())
-    seq = tokenizer.texts_to_sequences([text])
+def predict_sentiments(texts):
+    cleaned_texts = [clean_text(str(text).strip()) for text in texts]
+    seq = tokenizer.texts_to_sequences(cleaned_texts)
     padded = pad_sequences(seq, maxlen=MAX_LENGTH, padding='post', truncating='post')
 
     preds = model.predict(padded)
-    class_idx = np.argmax(preds, axis=1)[0]
-    confidence = float(np.max(preds))
-    sentiment = CLASS_LABELS[class_idx].capitalize()
-    return sentiment, confidence, preds
+    class_indices = np.argmax(preds, axis=1)
+    confidences = np.max(preds, axis=1)
+    sentiments = [CLASS_LABELS[index].capitalize() for index in class_indices]
+    return sentiments, confidences, preds
+
+
+def predict_sentiment(text):
+    sentiments, confidences, preds = predict_sentiments([text])
+    return sentiments[0], float(confidences[0]), preds
 
 # -------------------------------------------------------------
 # Streamlit UI
@@ -80,6 +102,35 @@ if st.button("Predict Sentiment"):
         st.write("Raw probabilities:", preds)
     else:
         st.warning("⚠️ Please enter some text for analysis.")
+
+st.subheader("Batch CSV Prediction")
+uploaded_file = st.file_uploader(
+    "Upload a tweet CSV",
+    type=["csv"],
+    help="Supports text, tweet, tweet_text, full_text, content, or message columns.",
+)
+
+if uploaded_file is not None:
+    batch_df = pd.read_csv(uploaded_file)
+    text_column = find_text_column(batch_df)
+
+    if text_column is None:
+        st.error("No tweet text column found. Add text, tweet, tweet_text, full_text, content, or message.")
+    else:
+        result_df = batch_df.dropna(subset=[text_column]).copy()
+        if result_df.empty:
+            st.warning("The selected text column has no rows to classify.")
+        else:
+            sentiments, confidences, _ = predict_sentiments(result_df[text_column])
+            result_df["predicted_sentiment"] = sentiments
+            result_df["prediction_confidence"] = [round(float(value), 4) for value in confidences]
+            st.dataframe(result_df, use_container_width=True)
+            st.download_button(
+                "Download predictions",
+                result_df.to_csv(index=False).encode("utf-8"),
+                file_name="tweet_sentiment_predictions.csv",
+                mime="text/csv",
+            )
 
 st.markdown("---")
 st.caption("Built with 🧠 TensorFlow + Streamlit | Twitter Sentiment Analysis Project")
