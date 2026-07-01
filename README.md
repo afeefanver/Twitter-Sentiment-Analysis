@@ -113,7 +113,18 @@ Run the app locally using the command below:
 
 ```bash
 streamlit run app.py
+```
 
+## Batch CSV Prediction
+
+The Streamlit app accepts a tweet CSV upload for batch prediction. It detects
+common text columns such as `text`, `tweet`, `tweet_text`, `full_text`,
+`content`, and `message`, then adds `predicted_sentiment` and
+`prediction_confidence` columns that can be downloaded as a CSV.
+
+This works with reviewed tweet exports from tools such as
+[TweetClaw](https://github.com/Xquik-dev/tweetclaw) when one of those text
+columns is present.
 
 ✅ **How to use it:**
 1. Copy everything above (including the Markdown formatting).
@@ -122,7 +133,6 @@ streamlit run app.py
 4. (Optional) Add a screenshot of your Streamlit app below the **Example Predictions** section for visual impact.
 
 Would you like me to also give you a **short GitHub description** (the one that appears below your repo title, e.g. “AI-powered Twitter Sentiment Classifier using BiLSTM + Streamlit”)? It helps attract views.
-
 
 
 
